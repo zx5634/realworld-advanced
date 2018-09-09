@@ -1,0 +1,48 @@
+<div class="auth-page">
+    <div class="container page">
+      <div class="row">
+
+        <div class="col-md-6 col-md-offset-3 col-xs-12">
+          <h1 class="text-xs-center">Sign in</h1>
+
+          <form #userForm="ngForm" (ngSubmit)="onSubmit()">
+            <fieldset class="form-group">
+              <input name="email" class="form-control form-control-lg"
+              type="text" placeholder="Email"
+              [(ngModel)]="user.email"
+              #email="ngModel" required email>
+            </fieldset>
+            <div *ngIf="email.invalid && (email.dirty || email.touched)"
+                class="alert alert-danger">
+                <div *ngIf="email.errors.required">
+                    email is required.
+                </div>
+                <div *ngIf="email.errors.email">
+                    email format error.
+                </div>
+            </div>
+            <fieldset class="form-group">
+              <input name="password" class="form-control form-control-lg"
+              type="password" placeholder="Password"  [(ngModel)]="user.password"
+              #password="ngModel" required minlength="4">
+            </fieldset>
+            <div *ngIf="password.invalid && (password.dirty || password.touched)"
+                class="alert alert-danger">
+                <div *ngIf="password.errors.required">
+                    password is required.
+                </div>
+                <div *ngIf="password.errors.minlength">
+                    password must be at least 4 characters long.
+                </div>
+            </div>
+            <button type="button" class="btn btn-lg btn-primary pull-xs-right"
+            (click)="login();userForm.reset();"
+            [disabled]="userForm.invalid">
+              Sign in
+            </button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>

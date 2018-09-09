@@ -1,0 +1,56 @@
+<div class="editor-page">
+    <div class="container page">
+      <div class="row">
+
+        <div class="col-md-10 col-md-offset-1 col-xs-12">
+          <form [formGroup]="postForm" (ngSubmit)="onSubmit()">
+            <fieldset class="form-group">
+              <input class="form-control form-control-lg"
+              type="text"
+              placeholder="Post Title"
+              formControlName="title">
+            </fieldset>
+            <div *ngIf="title.invalid && (title.dirty || title.touched)"
+                class="alert alert-danger">
+                <div *ngIf="title.errors.required">
+                    title is required.
+                </div>
+            </div>
+            <fieldset class="form-group">
+              <textarea class="form-control"
+              rows="8"
+              placeholder="Write your post (in markdown)"
+              formControlName="content"></textarea>
+            </fieldset>
+            <div *ngIf="content.invalid && (content.dirty || content.touched)"
+                class="alert alert-danger">
+                <div *ngIf="content.errors.required">
+                    content is required.
+                </div>
+                <div *ngIf="content.errors.minlength">
+                    content must be at least 10 characters long.
+                </div>
+            </div>
+            <fieldset class="form-group">
+              <input class="form-control"
+              type="text"
+              placeholder="Enter tags" #tag
+              (keyup.enter)="addTag(tag.value)">
+              <div class="tag-list" formArrayName="tags">
+                <span class="label label-pill label-default"
+                *ngFor="let tag of tags.controls; let i=index">
+                  <i class="ion-close-round"
+                  (click)="removeTag(i)"></i> {{ tag.value }}</span>
+              </div>
+            </fieldset>
+            <button type="submit"
+              class="btn btn-lg btn-primary pull-xs-right"
+              [disabled]="postForm.invalid">
+              Create Post
+            </button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
